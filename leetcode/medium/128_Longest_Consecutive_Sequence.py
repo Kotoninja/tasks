@@ -29,37 +29,54 @@ map = {100: 1, 4: 4, 200: 1, 1: 1, 3: 3, 2: 2}
 
 
 def longestConsecutive(nums: list[int]) -> int:
-    if not nums:
-        return 0
+    # TLE
+    # if not nums:
+    #     return 0
 
-    hash_map: dict = {}
+    # hash_map: dict = {}
 
-    def ancestors_update(number: int) -> int:
-        nonlocal hash_map
-        if number - 1 in hash_map:
-            return ancestors_update(number - 1)
-        return number - 1
+    # def ancestors_update(number: int) -> int:
+    #     nonlocal hash_map
+    #     if number - 1 in hash_map:
+    #         return ancestors_update(number - 1)
+    #     return number - 1
 
-    def descendents_update(number: int) -> int:
-        nonlocal hash_map
-        if (number + 1) in hash_map:
-            hash_map[number + 1] = hash_map[number] + 1
-            return descendents_update(number + 1)
-        return number + 1
+    # def descendants_update(number: int) -> int:
+    #     nonlocal hash_map
+    #     if (number + 1) in hash_map:
+    #         hash_map[number + 1] = hash_map[number] + 1
+    #         return descendants_update(number + 1)
+    #     return number + 1
 
-    for number in nums:
-        if not hash_map:
-            hash_map[number] = 1
-            continue
+    # for number in nums:
+    #     if not hash_map:
+    #         hash_map[number] = 1
+    #         continue
 
-        if ancestors_update(number) == number - 1:
-            hash_map[number] = 1
-        else:
-            hash_map[number] = 1 + hash_map[number - 1]
+    #     if ancestors_update(number) == number - 1:
+    #         hash_map[number] = 1
+    #     else:
+    #         hash_map[number] = 1 + hash_map[number - 1]
 
-        descendents_update(number)
+    #     descendants_update(number)
 
-    return max(hash_map.values())
+    # return max(hash_map.values())
+
+    nums_set = set(nums)
+
+    def descendant_length(number):
+        if number + 1 in nums_set:
+            return 1 + descendant_length(number + 1)
+        return 1
+
+    max_length = 0
+
+    for number in nums_set:
+        if number - 1 not in nums_set:
+            inter_length = descendant_length(number)
+            max_length = max(inter_length, max_length)
+
+    return max_length
 
 
 print(longestConsecutive(nums=[0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))
