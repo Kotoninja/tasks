@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/valid-sudoku/description/
 def isValidSudoku(board: list[list[str]]) -> bool:
     # row and column check
     for i in range(len(board)):
