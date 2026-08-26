@@ -1,2 +1,4 @@
 /.vscode
 *.drawio
+go.sum
+go.mod
